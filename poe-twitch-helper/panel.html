@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Очередь Twitch · PoE</title><link rel="stylesheet" href="panel.css"></head>
+<body>
+<main>
+  <header><p class="eyebrow">ЛОКАЛЬНЫЙ ПОМОЩНИК · ВЕРСИЯ 0.2.0</p><h1>Twitch → PoE</h1><p>До 46 аккаунтов автоматически: вход, привязка, активация, отвязка, следующий аккаунт.</p></header>
+  <div class="layout">
+    <section class="card">
+      <h2>1. Подготовь очередь</h2>
+      <label for="poe">Твой аккаунт PoE целиком, вместе с # и четырьмя цифрами</label>
+      <input id="poe" type="text" placeholder="Player#1234" autocomplete="off" spellcheck="false">
+      <label class="check"><input id="cleanupExisting" type="checkbox" checked><span>Перед запуском отвязать прежний Twitch, если он отличается от аккаунта из очереди</span></label>
+      <label for="accounts">Аккаунты Twitch</label>
+      <textarea id="accounts" rows="6" spellcheck="false" autocomplete="off" placeholder="- Логин(Login): twitch_name&#10;  Пароль(Password): пароль&#10;- Логин(Login): another_name&#10;  Пароль(Password): пароль"></textarea>
+      <div class="row"><button id="import">Загрузить список</button><label class="file">Выбрать TXT<input id="file" type="file" accept=".txt,text/plain"></label></div>
+      <p class="small">Пароли находятся в памяти расширения до закрытия браузера. После обработки каждого аккаунта его пароль удаляется. Они не входят в отчёт и не отправляются стороннему серверу.</p>
+      <button class="primary" id="start">Начать</button>
+      <p class="small">Сначала загрузи один аккаунт для пробы. Войди в PoE в этом же профиле Chrome. Используется английская версия сайта PoE.</p>
+    </section>
+    <section class="card" aria-live="polite">
+      <div class="row spread"><h2>2. Текущий шаг</h2><span id="progress" class="badge">0 из 0</span></div>
+      <p id="current" class="current">Очередь пуста</p>
+      <p id="phase"></p>
+      <p id="hint" class="hint">Добавь список слева.</p>
+      <p id="observed" class="small"></p>
+      <p id="diagnosticStatus" class="small"></p>
+      <p id="timing" class="small">Пауза между действиями: минимум 3 секунды. Ожидание активации: минимум 22 секунды.</p>
+      <div id="loginCheck" hidden><label class="check"><input id="loginVerified" type="checkbox"><span id="loginLabel">Я сверил логин в меню Twitch</span></label><button id="confirmLogin">Я вошёл в нужный Twitch</button></div>
+      <div class="row"><button id="focus">Рабочая вкладка</button><button id="pause">Пауза</button><button id="resume">Продолжить</button></div>
+      <button id="reload" class="quiet">Обновить страницу</button>
+      <button id="diagnostics" class="quiet">Скачать диагностику</button>
+      <button id="recover" class="quiet">Восстановить закрытую вкладку</button>
+      <button id="manualStep" class="quiet" hidden>Я завершил этот шаг на сайте вручную</button>
+      <p class="small">Кнопки «Войти» и Authorize для PoE нажимаются автоматически. Обычные всплывающие окна закрываются крестиком, при его отсутствии используется «Напомнить позже». Распознанное подтверждение отвязки нажимается автоматически. Код входа и CAPTCHA требуют участия на сайте.</p>
+      <p id="error" class="error" role="alert"></p>
+    </section>
+  </div>
+  <section class="card queue"><div class="row spread"><h2>Очередь аккаунтов</h2><div class="row"><button id="export">Скачать отчёт</button><button id="clear" class="danger">Очистить очередь</button></div></div><ol id="list"></ol></section>
+  <p class="foot">Версия 0.2.0 нажимает «Разрешить» доверенным кликом мыши через Chrome Debugger. Координаты центра кнопки вычисляются автоматически. Цепочка до следующего аккаунта остаётся автоматической. Пять последовательных циклов без ручных подтверждений проверены на тестовых страницах в DOM-среде. Живые аккаунты не использовались. Отчёт фиксирует привязку, нажатия активации и отвязку. Ожидания ручной проверки наград нет.</p>
+</main><script src="panel.js"></script>
+</body></html>

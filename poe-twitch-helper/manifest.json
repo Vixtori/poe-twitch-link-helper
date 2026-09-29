@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "PoE Twitch Queue",
+  "version": "0.2.0",
+  "description": "Автоматическая очередь Twitch → PoE: вход, привязка, активация, отвязка, следующий аккаунт.",
+  "minimum_chrome_version": "120",
+  "permissions": ["storage", "debugger"],
+  "background": {"service_worker": "background.js", "type": "module"},
+  "action": {"default_title": "Открыть очередь Twitch"},
+  "content_scripts": [{
+    "matches": ["https://www.pathofexile.com/my-account/connections*"],
+    "js": ["poe-confirm.js"],
+    "world": "MAIN",
+    "run_at": "document_start",
+    "all_frames": false
+  },{
+    "matches": ["https://www.twitch.tv/*", "https://id.twitch.tv/*", "https://www.pathofexile.com/*"],
+    "js": ["page-helpers.js", "content.js"],
+    "run_at": "document_idle",
+    "all_frames": false
+  }]
+}
